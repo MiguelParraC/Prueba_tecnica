@@ -78,6 +78,7 @@ class ProductsoutsController extends Controller
      */
     public function actionCreate()
     {
+        phpinfo();
         $model = new ProductsOuts();
         $this->LoadDataForm($model);
 
