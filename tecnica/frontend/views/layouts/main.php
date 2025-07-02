@@ -22,71 +22,72 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-     <!-- Bootstrap Icons CDN -->
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Bootstrap Icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon.ico">
+    <meta name="theme-color" content="#212529">
 </head>
-
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 bg-light">
     <?php $this->beginBody() ?>
-
     <header>
         <?php
-
         NavBar::begin([
-            'brandLabel' => Yii::$app->user->isGuest ? '' : 'INVENTARIOS',
+            'brandLabel' => Yii::$app->user->isGuest ? '<i class="bi bi-box"></i> Inventarios' : '<i class="bi bi-box"></i> INVENTARIOS',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
-                'class' => 'navbar navbar-expand-md navbar-dark bg-dark fixed-top',
+                'class' => 'navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top',
             ],
         ]);
+        $menuItems = [];
         if (!Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => 'Productos', 'url' => ['/productspool/index']];
-            $menuItems[] = ['label' => 'Categorías', 'url' => ['/category/index']];
-            
+            $menuItems[] = ['label' => '<i class="bi bi-list"></i> Productos', 'url' => ['/productspool/index'], 'encode' => false];
+            $menuItems[] = ['label' => '<i class="bi bi-tags"></i> Categorías', 'url' => ['/category/index'], 'encode' => false];
             if(Yii::$app->user->identity->see_out_product == 1){
-                $menuItems[] = ['label' => 'Salida de Productos', 'url' => ['/productsouts/index']];
+                $menuItems[] = ['label' => '<i class="bi bi-box-arrow-up"></i> Salida de Productos', 'url' => ['/productsouts/index'], 'encode' => false];
             }
             if(Yii::$app->user->identity->see_history == 1){
-                $menuItems[] = ['label' => 'Historial de movimientos', 'url' => ['/bitacora/index']];
+                $menuItems[] = ['label' => '<i class="bi bi-clock-history"></i> Historial', 'url' => ['/bitacora/index'], 'encode' => false];
             }
-
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav me-auto mb-2 mb-md-0'],
                 'items' => $menuItems,
+                'encodeLabels' => false,
             ]);
             echo Html::beginForm(['/site/logout'], 'post', ['class' => 'd-flex'])
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout text-decoration-none']
-            )
-            . Html::endForm();
-           
+                . Html::submitButton(
+                    '<i class="bi bi-box-arrow-right"></i> Logout (' . Yii::$app->user->identity->username . ')',
+                    ['class' => 'btn btn-link logout text-decoration-none text-light']
+                )
+                . Html::endForm();
         } else {
-            echo Html::tag('div', Html::a('Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none']]), ['class' => ['d-flex']]);
+            echo Html::tag('div', Html::a('<i class="bi bi-box-arrow-in-right"></i> Login', ['/site/login'], ['class' => ['btn btn-link login text-decoration-none text-light']]), ['class' => ['d-flex']]);
         }
         NavBar::end();
         ?>
     </header>
-
-    <main role="main" class="flex-shrink-0">
-        <div class="container">
+    <main role="main" class="flex-shrink-0 pt-5 mt-4">
+        <div class="container py-4">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
+            <?php foreach (Yii::$app->session->getAllFlashes() as $type => $message): ?>
+                <div class="alert alert-<?= $type ?> alert-dismissible fade show" role="alert">
+                    <?= $message ?>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php endforeach; ?>
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
     </main>
-
-    <footer class="footer mt-auto py-3 text-muted">
-        <div class="container">
-            <p class="float-start">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-            <p class="float-end"><?= Yii::powered() ?></p>
+    <footer class="footer mt-auto py-3 bg-dark text-light shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></span>
+            <span><?= Yii::powered() ?></span>
+            <span><a href="mailto:soporte@tudominio.com" class="text-light"><i class="bi bi-envelope"></i> Soporte</a></span>
         </div>
     </footer>
-
     <?php $this->endBody() ?>
 </body>
-
 </html>
-<?php $this->endPage();
+<?php $this->endPage() ?>

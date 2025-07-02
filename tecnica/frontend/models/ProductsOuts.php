@@ -28,7 +28,7 @@ class ProductsOuts extends \yii\db\ActiveRecord
         return 'products_outs';
     }
 
-    public $list_products, $sales_products, $count_products, $list_action;
+    public $list_products, $sales_products, $count_products, $list_action, $list_categories;
 
     /**
      * {@inheritdoc}

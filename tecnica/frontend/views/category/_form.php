@@ -31,24 +31,25 @@ use yii\widgets\ActiveForm;
 
             <div class="row">
                 <div class="offset-md-1 col-md-6">
-                    <?= $form->field($model->whoCreated, 'username')->textInput()->label(Yii::t('app', 'Creado por')) ?>
+                    <?= $form->field($model->whoCreated, 'username')->textInput(['readonly' => true])->label(Yii::t('app', 'Creado por')) ?>
                 </div>
                 <div class="col-md-4">
-                    <?= $form->field($model, 'created_at')->textInput()->label(Yii::t('app', 'Creado el')) ?>
+                    <?= $form->field($model, 'created_at')->textInput(['readonly' => true])->label(Yii::t('app', 'Creado el')) ?>
                 </div>
             </div>
 
             <div class="row">
                 <div class="offset-md-1 col-md-6">
-                    <?= $form->field($model->whoUpdated, 'username')->textInput()->label(Yii::t('app', 'Actualizado por')) ?>
+                    <?= $form->field($model->whoUpdated, 'username')->textInput(['readonly' => true])->label(Yii::t('app', 'Actualizado por')) ?>
                 </div>
                 <div class="col-md-4">
-                    <?= $form->field($model, 'updated_at')->textInput()->label(Yii::t('app', 'Actualizado el')) ?>
+                    <?= $form->field($model, 'updated_at')->textInput(['readonly' => true])->label(Yii::t('app', 'Actualizado el')) ?>
                 </div>
             </div>
         <?php endif; ?>
         <br>
     </div>
+    <hr style="border: 1px solid #000;">
     <div class="col-12 text-center">
         <?= Html::submitButton(Yii::t('app', 'Guardar'), ['class' => 'btn btn-success guardar-class']) ?>
     </div>

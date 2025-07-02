@@ -1,3 +1,17 @@
+function getBaseUrl() {
+
+    var base = document.querySelector('base');
+    if (base && base.href) {
+        return base.href.replace(/\/$/, '');
+    }
+    var path = window.location.pathname;
+    var index = path.indexOf('/frontend/web/');
+    if (index !== -1) {
+        return path.substring(0, index + 14);
+    }
+    return '';
+}
+
 function change_product(e) {
     flag  = true;
     row = e.parentElement.parentElement.parentElement;
@@ -7,7 +21,7 @@ function change_product(e) {
     if (flag) {
         $.ajax({
             // la URL para la petición
-            url: 'index.php?r=productsouts/getstock',
+            url: getBaseUrl() + '/productsouts/getstock',
             type: 'GET',
             dataType: 'json',
             data: {

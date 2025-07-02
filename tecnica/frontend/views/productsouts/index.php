@@ -28,7 +28,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); 
     ?>
 
-    <?php if (Yii::$app->user->identity->id == 1) { ?>
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'filterModel' => $searchModel,
@@ -119,7 +118,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ],
         ]); ?>
-    <?php } ?>
     <?php Pjax::end(); ?>
 
 </div>

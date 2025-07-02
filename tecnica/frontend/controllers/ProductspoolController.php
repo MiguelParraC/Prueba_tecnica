@@ -237,6 +237,8 @@ class ProductspoolController extends Controller
         $model->list_status = [0 => 'Inactivo', 1 => 'Activo', 2 => 'Agotado'];
         $model->list_names = ArrayHelper::map(ProductsPool::find()->all(), 'id', 'name');
         $model->list_action = [0 => 'Creado', 1 => 'Entrada', 2 => 'Salida'];
+        $category = new \frontend\models\Category();
+        $model->list_categories = $category->getListCategories();
         if ($model->model_action != 'create') {
             $model->name_user_create = $model->whoCreated->username;
             $model->name_user_updated = $model->whoUpdated->username;
