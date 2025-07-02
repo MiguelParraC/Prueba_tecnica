@@ -36,7 +36,7 @@ class ProductsPool extends \yii\db\ActiveRecord
 
     // variables auxiliares
     public $name_user_create, $name_user_updated;
-    public $list_status, $list_names, $model_action, $list_action;
+    public $list_status, $list_names, $model_action, $list_action, $list_categories;
     public $aux_stock;
     
 

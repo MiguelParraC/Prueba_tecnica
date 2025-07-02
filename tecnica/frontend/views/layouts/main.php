@@ -41,6 +41,7 @@ AppAsset::register($this);
         ]);
         if (!Yii::$app->user->isGuest) {
             $menuItems[] = ['label' => 'Productos', 'url' => ['/productspool/index']];
+            $menuItems[] = ['label' => 'Categorías', 'url' => ['/category/index']];
             
             if(Yii::$app->user->identity->see_out_product == 1){
                 $menuItems[] = ['label' => 'Salida de Productos', 'url' => ['/productsouts/index']];

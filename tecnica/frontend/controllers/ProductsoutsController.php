@@ -7,6 +7,7 @@ use frontend\models\ProductsoutsSearch;
 use frontend\models\ProductsPool;
 use frontend\models\ProductsSales;
 use frontend\models\Bitacora;
+use frontend\models\Category;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -78,7 +79,6 @@ class ProductsoutsController extends Controller
      */
     public function actionCreate()
     {
-        phpinfo();
         $model = new ProductsOuts();
         $this->LoadDataForm($model);
 
@@ -200,6 +200,8 @@ class ProductsoutsController extends Controller
     public function LoadDataForm(&$model)
     {
         $model->list_products = ArrayHelper::map(ProductsPool::find()->where(['status' => 1])->all(), 'id', 'name');
+        $category = new \frontend\models\Category();
+        $model->list_categories = $category->getListCategories();
         $model->count_products = count($model->list_products);
         $model->list_action = [0 => 'Creado', 1 => 'Entrada', 2 => 'Salida'];
         // consultando product sales para cargar al formulario

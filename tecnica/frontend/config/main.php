@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'timeZone' => 'America/Mexico_City',
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
@@ -40,12 +41,12 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
-            'rules' => [
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => ['productspool'],
-                ],
-            ],
+            // 'rules' => [
+            //     [
+            //         'class' => 'yii\rest\UrlRule',
+            //         //'controller' => ['productspool'],
+            //     ],
+            // ],
         ],
     ],
     'params' => $params,

@@ -29,6 +29,10 @@ class Category extends \yii\db\ActiveRecord
         return 'category';
     }
 
+
+    public $list_categories, $list_status, $view;
+    public $name_who_created, $name_who_updated;
+
     /**
      * {@inheritdoc}
      */
@@ -51,13 +55,18 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'status' => Yii::t('app', 'Status'),
-            'who_created' => Yii::t('app', 'Who Created'),
-            'created_at' => Yii::t('app', 'Created At'),
-            'who_updated' => Yii::t('app', 'Who Updated'),
-            'updated_at' => Yii::t('app', 'Updated At'),
+            'name' => Yii::t('app', 'Nombre'),
+            'status' => Yii::t('app', 'Estado'),
+            'who_created' => Yii::t('app', 'Creado Por'),
+            'created_at' => Yii::t('app', 'Fecha de Creación'),
+            'who_updated' => Yii::t('app', 'Actualizado Por'),
+            'updated_at' => Yii::t('app', 'Fecha de Actualización'),
         ];
+    }
+
+    public function getListCategories()
+    {
+        return \yii\helpers\ArrayHelper::map(Category::find()->where(['status' => 1])->all(), 'id', 'name');
     }
 
     /**

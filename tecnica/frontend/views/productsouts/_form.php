@@ -11,7 +11,7 @@ use kartik\select2\Select2;
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
-<div class="products-pool-form">
+<div class="products-pool-form styles_form">
 
     <?php $form = ActiveForm::begin(); ?>
     <?php

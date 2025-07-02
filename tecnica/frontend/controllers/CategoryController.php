@@ -7,6 +7,7 @@ use frontend\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use frontend\models\ProductsPool;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -69,9 +70,29 @@ class CategoryController extends Controller
     {
         $model = new Category();
 
+        $model->view = 'create';
+        
+        $this->LoadDataForm($model);
+
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                if ($model->validate()) {
+                    
+                    // Set the user who created the category
+                    $model->who_created = \Yii::$app->user->id;
+                    $model->created_at = date('Y-m-d H:i:s');   
+                    // Set the user who updated the category
+                    $model->who_updated = \Yii::$app->user->id;
+                    $model->updated_at = date('Y-m-d H:i:s');
+
+
+                    $model->save();
+                    return $this->redirect(['index']);
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
             }
         } else {
             $model->loadDefaultValues();
@@ -80,6 +101,15 @@ class CategoryController extends Controller
         return $this->render('create', [
             'model' => $model,
         ]);
+    }
+
+    public function LoadDataForm($model)
+    {
+        $ppool = new ProductsPool();
+        $model->list_status = $ppool->getStatus();
+        // load who
+        $model->name_who_created = \Yii::$app->user->id;
+        $model->name_who_updated = \Yii::$app->user->id;
     }
 
     /**
@@ -92,8 +122,30 @@ class CategoryController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->view = 'update';
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        $this->LoadDataForm($model);
+
+        if ($this->request->isPost && $model->load($this->request->post())) {
+
+            if ($model->validate()) {
+                // Set the user who updated the category
+                $model->who_updated = \Yii::$app->user->id;
+                $model->updated_at = date('Y-m-d H:i:s');
+
+                // If status is not set, default to active
+                if ($model->status === null) {
+                    $model->status = 1; // Active
+                }
+
+                 $model->save();
+            } else {
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+
+           
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
