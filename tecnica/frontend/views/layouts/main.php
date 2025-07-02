@@ -35,7 +35,9 @@ AppAsset::register($this);
             'brandLabel' => Yii::$app->user->isGuest ? '<i class="bi bi-box"></i> Inventarios' : '<i class="bi bi-box"></i> INVENTARIOS',
             'brandUrl' => Yii::$app->homeUrl,
             'options' => [
-                'class' => 'navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top',
+                // Colores inspirados en la tortuga: verde oscuro y acento marrón/arena
+                'class' => 'navbar navbar-expand-md navbar-dark shadow-sm fixed-top',
+                'style' => 'background: linear-gradient(90deg, #355C3A 0%, #A67C52 100%);',
             ],
         ]);
         $menuItems = [];
@@ -75,11 +77,11 @@ AppAsset::register($this);
         </div>
     </main>
 
-    <footer class="footer mt-auto py-3 bg-dark text-light shadow-sm">
+    <footer class="footer mt-auto py-3 text-light shadow-sm" style="background: linear-gradient(90deg, #355C3A 0%, #A67C52 100%);">
         <div class="container d-flex justify-content-between align-items-center">
             <span>&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></span>
-            <span><?= Yii::powered() ?></span>
-            <span><a href="mailto:soporte@tudominio.com" class="text-light"><i class="bi bi-envelope"></i> Soporte</a></span>
+            
+            <span><a href="mailto:parracmiguel@gmail.com" class="text-light"><i class="bi bi-envelope"></i> Soporte</a></span>
         </div>
     </footer>
     <?php $this->endBody() ?>

@@ -1,3 +1,31 @@
+/* Fondo y bordes personalizados para el MultipleInput de productsouts */
+.products-pool-form .multiple-input, 
+.products-pool-form .multiple-input-list, 
+.products-pool-form .multiple-input-list__item, 
+.products-pool-form .multiple-input-list__header {
+    background: #f5f3e7;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(53, 92, 58, 0.07);
+}
+
+.products-pool-form .multiple-input-list__item {
+    margin-bottom: 8px;
+    border-radius: 14px;
+    background: #f5f3e7;
+}
+
+.products-pool-form .multiple-input-list__header {
+    background: #e2d7b7;
+    border-radius: 14px 14px 0 0;
+    font-weight: 600;
+}
+
+.products-pool-form .multiple-input input,
+.products-pool-form .multiple-input select {
+    background: #f9f7ef;
+    border-radius: 8px;
+    border: 1px solid #b6a16b;
+}
 main>.container,
 main>.container-fluid {
     padding: 70px 15px 20px;
@@ -122,11 +150,32 @@ a.desc:after {
 }
 
 .styles_form {
-    background-color: #a5c9ff;
-    border-radius: 20px;
-    box-shadow: 7px 7px 4px rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    margin-bottom: 20px;
+    /* Fondo solo con hexágonos tipo caparazón de tortuga */
+    background: #e2d7b7;
+    border-radius: 24px;
+    box-shadow: 0 6px 24px rgba(53, 92, 58, 0.12);
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto "hexágonos" tipo caparazón de tortuga usando SVG como fondo */
+.styles_form::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.13;
+    z-index: 0;
+    pointer-events: none;
+    background-image: url('data:image/svg+xml;utf8,<svg width="60" height="52" viewBox="0 0 60 52" fill="none" xmlns="http://www.w3.org/2000/svg"><polygon points="30,2 58,15 58,37 30,50 2,37 2,15" fill="%23a67c52" stroke="%237a8c5c" stroke-width="2"/></svg>');
+    background-size: 60px 52px;
+    background-repeat: repeat;
+}
+
+.styles_form > * {
+    position: relative;
+    z-index: 1;
 }
 
 .guardar-class{
