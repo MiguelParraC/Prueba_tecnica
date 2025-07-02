@@ -25,8 +25,8 @@ class m240828_143308_add_new_users extends Migration
         $user->add_new_product= 1;
         $user->add_num_products= 1;
         $user->activate_products= 1;
-        $user->see_out_product= 0;
-        $user->out_product= 0;
+        $user->see_out_product= 1;
+        $user->out_product= 1;
         $user->see_history= 1;
         $user->save(false);
 
