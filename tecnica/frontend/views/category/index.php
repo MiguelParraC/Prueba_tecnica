@@ -89,7 +89,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     ['class' => 'form-control', 'prompt' => 'VER TODOS']
                 ),
             ],
-            'who_created',
+            [
+                'attribute' => 'who_created',
+                'value' => function($model) {
+                    return $model->whoCreated ? $model->whoCreated->username : null;
+                },
+                'filter' => \yii\helpers\Html::activeDropDownList(
+                    $searchModel,
+                    'who_created',
+                    \frontend\models\UserHelper::getUserList(),
+                    ['class' => 'form-control', 'prompt' => 'VER TODOS']
+                ),
+                'label' => 'Creado Por',
+            ],
             'created_at',
             //'who_updated',
             //'updated_at',
