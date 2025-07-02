@@ -9,6 +9,11 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use frontend\models\ProductsPool;
 
+use Yii;
+use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
+use DateTime;
+
 /**
  * CategoryController implements the CRUD actions for Category model.
  */
@@ -163,7 +168,21 @@ class CategoryController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        
+        $model = $this->findModel($id);
+        $model->status = 0; // Set status to inactive instead of deleting
+        $model->who_updated = \Yii::$app->user->id;
+        $model->updated_at = date('Y-m-d H:i:s');
+        if($model->save()) {
+            Yii::$app->session->setFlash('warning', 'La categoría no puede ser eliminada, por lo tanto se inactiva.');
+            $bitacora = new \frontend\models\Bitacora();
+            $bitacora->accion = 4; // Acción de eliminación
+            $list_action = $bitacora->getActions();
+            $bitacora->user = \Yii::$app->user->id;
+            $bitacora->created_at = date('Y-m-d H:i:s');
+            $bitacora->descripcion = 'El Usuario ' . \Yii::$app->user->identity->username . ' eliminó la categoría: ' . $model->name . ' el ' . date('Y-m-d H:i:s');
+            $bitacora->save();
+        }
 
         return $this->redirect(['index']);
     }

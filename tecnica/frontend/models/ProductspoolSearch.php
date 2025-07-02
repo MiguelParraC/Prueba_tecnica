@@ -50,7 +50,6 @@ class ProductspoolSearch extends ProductsPool
     {
         $query = ProductsPool::find();
 
-        // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -59,8 +58,6 @@ class ProductspoolSearch extends ProductsPool
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 
@@ -72,7 +69,6 @@ class ProductspoolSearch extends ProductsPool
         // grid filtering conditions
         $query->andFilterWhere([
             // 'id' => $this->id,
-            // 'status' => $this->status,
             'price' => $this->price,
             'stock' => $this->stock,
             'category_id' => $this->category_id, 
@@ -80,12 +76,11 @@ class ProductspoolSearch extends ProductsPool
             'created_at' => $this->created_at,
             'who_updated' => $this->who_updated,
             'updated_at' => $this->updated_at,
+            'status' => ($this->status === '' || $this->status === null) ? null : $this->status,
+            'id' => ($this->product_id === '' || $this->product_id === null) ? null : $this->product_id,
         ]);
 
-        $query->andFilterWhere(['=', 'id', $this->product_id])
-            ->andFilterWhere(['=', 'status', $this->status])
-            ->andFilterWhere(['like', 'name', $this->name])
-            ;
+        $query->andFilterWhere(['like', 'name', $this->name]);
         return $dataProvider;
     }
 }

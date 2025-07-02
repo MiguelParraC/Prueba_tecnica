@@ -70,29 +70,30 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'class' => 'yii\grid\ActionColumn',
                 'options' => ['class' => 'action-column'],
+                'template' => '{view} {update} {delete}',
                 'buttons' => [
-                    'view' => function(){
-                        return '';
+                    'view' => function ($url, $model, $key) {
+                        return Html::a("<span class='bi bi-eye-fill btn btn-info p-1' style='font-size:1rem;'></span>", $url, [
+                            'title' => 'Ver',
+                            'data-pjax' => '0',
+                        ]);
                     },
-                    'delete' => function(){
-                        return '';
-                    },
-                    
-
                     'update' => function ($url, $model, $key) {
-                        if (Yii::$app->user->identity->add_num_products == 1 || Yii::$app->user->identity->activate_products == 1) {
-                            return Html::a("<span class='bi bi-pencil-fill btn btn-primary' style='position: static;'></span>", $url);
-
-                        } else {
-                            return '';
-                        }
+                        return Html::a("<span class='bi bi-pencil-fill btn btn-primary p-1' style='font-size:1rem;'></span>", $url, [
+                            'title' => 'Editar',
+                            'data-pjax' => '0',
+                        ]);
                     },
-                ]
-                // 'template' => '{view}{update}',
+                    'delete' => function ($url, $model, $key) {
+                        return Html::a("<span class='bi bi-trash-fill btn btn-danger p-1' style='font-size:1rem;'></span>", $url, [
+                            'title' => 'Eliminar',
+                            'data-pjax' => '0',
+                            'data-confirm' => '¿Estás seguro que deseas eliminar este registro?',
+                            'data-method' => 'post',
+                        ]);
+                    },
+                ],
             ],
-
-
-
 
 
             // 'id',
@@ -124,16 +125,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'value' => function ($model) use ($searchModel) {
 
-                    if ($model->status != '') {
+                    if ($model->status !== '') {
                         return Yii::t('app', $searchModel->list_status[$model->status]);
                     } else {
                         return Yii::t('app', $searchModel->list_status[1]);
                     }
                 },
                 'label' => Yii::t('app', 'Status'),
-                'contentOptions' => [
-                    'style' => 'text-align:center;'
-                ],
+                'contentOptions' => function ($model) {
+                    // 0: Inactivo (amarillo), 1: Activo (verde), 2: Eliminado (rojo)
+                    if ($model->status == 1) {
+                        return ['style' => 'text-align:center; background-color:#d4edda; color:#155724;']; // verde suave
+                    } elseif ($model->status == 0) {
+                        return ['style' => 'text-align:center; background-color:#fff3cd; color:#856404;']; // amarillo suave
+                    } elseif ($model->status == 2) {
+                        return ['style' => 'text-align:center; background-color:#f8d7da; color:#721c24;']; // rojo suave
+                    } else {
+                        return ['style' => 'text-align:center;'];
+                    }
+                },
                 'headerOptions' => [
                     'style' => 'text-align:center;'
                 ],

@@ -36,23 +36,29 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'options' => ['class' => 'action-column'],
+                    'template' => '{view} {update} {delete}',
                     'buttons' => [
-                        'view' => function () {
-                            return '';
+                        'view' => function ($url, $model, $key) {
+                            return Html::a("<span class='bi bi-eye-fill btn btn-info p-1' style='font-size:1rem;'></span>", $url, [
+                                'title' => 'Ver',
+                                'data-pjax' => '0',
+                            ]);
                         },
-                        'delete' => function () {
-                            return '';
-                        },
-
                         'update' => function ($url, $model, $key) {
-                            if (Yii::$app->user->identity->id == 1) {
-                                return Html::a("<span class='bi bi-pencil-fill btn btn-primary' style='position: static;'></span>", $url);
-                            } else {
-                                return '';
-                            }
+                            return Html::a("<span class='bi bi-pencil-fill btn btn-primary p-1' style='font-size:1rem;'></span>", $url, [
+                                'title' => 'Editar',
+                                'data-pjax' => '0',
+                            ]);
                         },
-                    ]
-                    // 'template' => '{view}{update}',
+                        'delete' => function ($url, $model, $key) {
+                            return Html::a("<span class='bi bi-trash-fill btn btn-danger p-1' style='font-size:1rem;'></span>", $url, [
+                                'title' => 'Eliminar',
+                                'data-pjax' => '0',
+                                'data-confirm' => '¿Estás seguro que deseas eliminar este registro?',
+                                'data-method' => 'post',
+                            ]);
+                        },
+                    ],
                 ],
                 // 'id',
                 [

@@ -53,7 +53,7 @@ class Bitacora extends \yii\db\ActiveRecord
     }
 
     public function getActions(){
-        return [0=> 'Creado', 1 => 'Entrada', 2 => 'Salida', 3 => 'Actualiza información'];
+        return [0=> 'Creado', 1 => 'Entrada', 2 => 'Salida', 3 => 'Actualiza información', 4 => 'Eliminado'];
     }
 
     /**

@@ -211,7 +211,27 @@ class ProductspoolController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        $model->status = 0; // Cambiando el estado a inactivo
+        $model->stock = 0; // Cambiando el stock a 0
+        $model->who_updated = Yii::$app->user->identity->id;
+        $model->updated_at = date('Y-m-d H:i:s');
+        if($model->save())
+        {
+            Yii::$app->session->setFlash('warning', 'El producto no puede ser eliminado, por lo tanto se inactiva.');
+            $bitacora = new Bitacora();
+            $bitacora->accion = 4; // Acción de eliminación
+            $list_action = $bitacora->getActions();
+            $bitacora->user = Yii::$app->user->identity->id;
+            $TimeZone = "America/Mexico_City";
+            $fecha_objeto = new DateTime();
+            $fecha_objeto->setTimezone(new \DateTimeZone($TimeZone));
+            $fecha_update = $fecha_objeto->format("Y-m-d H:i:s");
+            $bitacora->created_at = $fecha_update;
+            $bitacora->descripcion = 'El Usuario ' . Yii::$app->user->identity->username . '. Realizó: ' . $list_action[$bitacora->accion] . ', Del producto: ' . $model->name . '. El ' . $fecha_update;
+            $bitacora->save();
+        }
 
         return $this->redirect(['index']);
     }

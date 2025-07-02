@@ -82,20 +82,20 @@ use yii\widgets\ActiveForm;
         <?php if ($model->model_action != 'create') { ?>
             <div class="row">
                 <div class="col-md-6">
-                    <?= $form->field($model, 'name_user_create')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled']) ?>
+                    <?= $form->field($model, 'name_user_create')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled'])->label(yii::t('app', 'Usuario que creó')) ?>
                 </div>
 
                 <div class="col-md-6">
-                    <?= $form->field($model, 'created_at')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled']) ?>
+                    <?= $form->field($model, 'created_at')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled'])->label(yii::t('app', 'Fecha de creación')) ?>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6">
-                    <?= $form->field($model, 'name_user_updated')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled'])->label('Usuario que creó') ?>
+                    <?= $form->field($model, 'name_user_updated')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled'])->label('Usuario que Actualizó') ?>
                 </div>
                 <div class="col-md-6">
-                    <?= $form->field($model, 'updated_at')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled'])->label('Usuario que actualizó') ?>
+                    <?= $form->field($model, 'updated_at')->textInput(['class' => 'form-control border-primary', 'disabled' => 'disabled'])->label('Fecha de actualización') ?>
                 </div>
             </div>
 

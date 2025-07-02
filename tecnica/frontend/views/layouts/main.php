@@ -70,16 +70,11 @@ AppAsset::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?php foreach (Yii::$app->session->getAllFlashes() as $type => $message): ?>
-                <div class="alert alert-<?= $type ?> alert-dismissible fade show" role="alert">
-                    <?= $message ?>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            <?php endforeach; ?>
             <?= Alert::widget() ?>
             <?= $content ?>
         </div>
     </main>
+
     <footer class="footer mt-auto py-3 bg-dark text-light shadow-sm">
         <div class="container d-flex justify-content-between align-items-center">
             <span>&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></span>
