@@ -34,8 +34,7 @@ return [
             'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                'GET v1/default/test' => 'v1/default/test',
-                'GET v1/default/hello' => 'v1/default/hello',
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['v1/productspool']],
             ],
         ],
     ],

@@ -1,7 +1,7 @@
 <?php
 
 namespace common\models;
-use common\models\User;
+
 use Yii;
 
 /**
@@ -13,13 +13,13 @@ use Yii;
  * @property int|null $status 0 => inactivo, 1 => activo, 2 => agotado
  * @property float $price
  * @property int|null $stock
- * @property int|null $category_id Relación con la tabla categorías 
+ * @property int|null $category_id Relación con la tabla categorías
  * @property int|null $who_created Quien Creó
  * @property string|null $created_at Fecha de creado
  * @property int|null $who_updated Quien Actualiza
  * @property string|null $updated_at Fecha de actualizado
  *
- * @property Category $category 
+ * @property Category $category
  * @property ProductsSales[] $productsSales
  * @property User $whoCreated
  * @property User $whoUpdated
@@ -34,12 +34,6 @@ class ProductsPool extends \yii\db\ActiveRecord
         return 'products_pool';
     }
 
-    // variables auxiliares
-    public $name_user_create, $name_user_updated;
-    public $list_status, $list_names, $model_action, $list_action, $list_categories;
-    public $aux_stock;
-    
-
     /**
      * {@inheritdoc}
      */
@@ -47,16 +41,16 @@ class ProductsPool extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'price'], 'required'],
-            [['status', 'stock', 'category_id', 'who_created', 'who_updated'], 'integer'],
             [['description'], 'string'],
+            [['status', 'stock', 'category_id', 'who_created', 'who_updated'], 'integer'],
             [['price'], 'number'],
             [['created_at', 'updated_at'], 'safe'],
-            [['name','price','status','stock', 'aux_stock'], 'safe'],
             [['name'], 'string', 'max' => 255],
-            [['name'], 'unique'],
             [['category_id'], 'exist', 'skipOnError' => true, 'targetClass' => Category::class, 'targetAttribute' => ['category_id' => 'id']],
             [['who_created'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_created' => 'id']],
             [['who_updated'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['who_updated' => 'id']],
+
+            [['description', 'status', 'stock', 'category_id', 'who_created', 'created_at', 'who_updated', 'updated_at'], 'safe'],
         ];
     }
 
@@ -67,33 +61,33 @@ class ProductsPool extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'NOMBRE DEL PRODUCTO'),
-            'description' => Yii::t('app', 'DESCRIPCIÓN DEL PRODUCTO'),
-            'status' => Yii::t('app', 'ESTADO'),
-            'price' => Yii::t('app', 'PRECIO'),
+            'name' => Yii::t('app', 'Name'),
+            'description' => Yii::t('app', 'Description'),
+            'status' => Yii::t('app', 'Status'),
+            'price' => Yii::t('app', 'Price'),
             'stock' => Yii::t('app', 'Stock'),
             'category_id' => Yii::t('app', 'Category ID'),
-            'who_created' => Yii::t('app', 'Quien Creó'),
-            'created_at' => Yii::t('app', 'Fecha Creado'),
-            'who_updated' => Yii::t('app', 'Quien Actualizó'),
-            'updated_at' => Yii::t('app', 'Fecha de actualizado'),
+            'who_created' => Yii::t('app', 'Who Created'),
+            'created_at' => Yii::t('app', 'Created At'),
+            'who_updated' => Yii::t('app', 'Who Updated'),
+            'updated_at' => Yii::t('app', 'Updated At'),
         ];
     }
 
-	/** 
-    * Gets query for [[Category]]. 
-    * 
-    * @return \yii\db\ActiveQuery 
-    */ 
-    public function getCategory() 
-    { 
-        return $this->hasOne(Category::class, ['id' => 'category_id']); 
+    /**
+     * Gets query for [[Category]].
+     *
+     * @return \yii\db\ActiveQuery|\common\models\query\CategoryQuery
+     */
+    public function getCategory()
+    {
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
     /**
      * Gets query for [[ProductsSales]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\ProductsSalesQuery
      */
     public function getProductsSales()
     {
@@ -103,7 +97,7 @@ class ProductsPool extends \yii\db\ActiveRecord
     /**
      * Gets query for [[WhoCreated]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\UserQuery
      */
     public function getWhoCreated()
     {
@@ -113,14 +107,19 @@ class ProductsPool extends \yii\db\ActiveRecord
     /**
      * Gets query for [[WhoUpdated]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\UserQuery
      */
     public function getWhoUpdated()
     {
         return $this->hasOne(User::class, ['id' => 'who_updated']);
     }
 
-    public function getStatus() {
-        return [0 => 'Inactivo', 1 => 'Activo', 2 => 'Agotado'];
+    /**
+     * {@inheritdoc}
+     * @return \common\models\query\ProductsPoolQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new \common\models\query\ProductsPoolQuery(get_called_class());
     }
 }
