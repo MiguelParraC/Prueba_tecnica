@@ -45,3 +45,5 @@ phpunit.phar
 /backend/web/index.php
 /backend/web/index-test.php
 /backend/web/robots.txt
+# API logs
+/frontend/api/runtime/logs/app.log
