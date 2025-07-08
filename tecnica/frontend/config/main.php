@@ -41,12 +41,13 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
-            // 'rules' => [
-            //     [
-            //         'class' => 'yii\rest\UrlRule',
-            //         //'controller' => ['productspool'],
-            //     ],
-            // ],
+           'rules' => [
+            ],
+        ],
+    ],
+    'modules' => [
+        'api' => [
+            'class' => '\frontend\modules\api\Module',
         ],
     ],
     'params' => $params,
